@@ -1,0 +1,21 @@
+version: '3'
+services:
+  database:
+    image: postgres
+    ports:
+    - 6432:5432
+    environment:
+      POSTGRES_DB: cx_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: new_password
+  service:
+    build: .
+    ports:
+    - 9090:8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database/cx_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: new_password
+      SERVER_SERVLET_CONTEXT_PATH: /fin-manager
+    depends_on:
+    - database
