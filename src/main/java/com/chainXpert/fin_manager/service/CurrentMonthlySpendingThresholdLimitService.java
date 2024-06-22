@@ -3,6 +3,7 @@ package com.chainXpert.fin_manager.service;
 import com.chainXpert.fin_manager.dto.request.MonthlySpendingThresholdLimitRequestDto;
 import com.chainXpert.fin_manager.repository.CurrentMonthlySpendingThresholdLimitRepository;
 import com.chainXpert.fin_manager.security.utility.JwtUtils;
+import com.chainXpert.fin_manager.utils.CommonUtil;
 import com.chainXpert.fin_manager.utils.ResponseUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class CurrentMonthlySpendingThresholdLimitService {
     public ResponseEntity<?> update(final MonthlySpendingThresholdLimitRequestDto monthlySpendingThresholdLimitRequest,
                                     final String token) {
         final var currentMonthlySpendingThresholdLimit = currentMonthlySpendingThresholdLimitRepository
-                .findByUserId(jwtUtils.extractUserId(token.replace("Bearer ", "")).longValue()).get();
+                .findByUserId(jwtUtils.extractUserId(CommonUtil.replaceString(token, "Bearer ")).longValue()).get();
 
         currentMonthlySpendingThresholdLimit.setIsActive(monthlySpendingThresholdLimitRequest.getActive());
         currentMonthlySpendingThresholdLimit.setLimitValue(monthlySpendingThresholdLimitRequest.getLimitValue());

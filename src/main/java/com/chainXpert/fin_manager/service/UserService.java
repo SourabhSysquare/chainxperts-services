@@ -12,6 +12,7 @@ import com.chainXpert.fin_manager.repository.CurrentMonthlySpendingThresholdLimi
 import com.chainXpert.fin_manager.repository.TotalBalanceRepository;
 import com.chainXpert.fin_manager.repository.UserRepository;
 import com.chainXpert.fin_manager.security.utility.JwtUtils;
+import com.chainXpert.fin_manager.utils.CommonUtil;
 import com.chainXpert.fin_manager.utils.ResponseUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +49,7 @@ public class UserService {
     }
 
     public ResponseEntity<?> retreive(String token) {
-        final var userId = jwtUtils.extractUserId(token.replace("Bearer ", ""));
+        final var userId = jwtUtils.extractUserId(CommonUtil.replaceString(token, "Bearer "));
         final var user = userRepository.findById(userId.longValue()).get();
         return ResponseEntity.ok(UserDetailsDto.builder().createdAt(user.getCreatedAt())
                 .dateOfBirth(user.getDateOfBirth()).emailId(user.getEmailId()).firstName(user.getFirstName())
@@ -101,7 +102,7 @@ public class UserService {
 
     public ResponseEntity<?> updatePassword(final UserPasswordUpdationRequestDto userPasswordUpdationRequestDto,
                                             final String token) {
-        final var loggedInUserId = jwtUtils.extractUserId(token.replace("Bearer ", ""));
+        final var loggedInUserId = jwtUtils.extractUserId(CommonUtil.replaceString(token, "Bearer "));
         final var user = userRepository.findById(loggedInUserId.longValue()).get();
 
         if (!passwordEncoder.matches(userPasswordUpdationRequestDto.getOldPassword(), user.getPassword()))
@@ -114,14 +115,14 @@ public class UserService {
     }
 
     public ResponseEntity<?> deleteAccount(final String token) {
-        final var userId = jwtUtils.extractUserId(token.replace("Bearer ", ""));
+        final var userId = jwtUtils.extractUserId(CommonUtil.replaceString(token, "Bearer "));
         final var totalBalance = totalBalanceRepository.findByUserId(userId.longValue()).get();
         totalBalanceRepository.deleteById(totalBalance.getId());
         return ResponseEntity.ok().build();
     }
 
     public ResponseEntity<?> update(final UserDetailUpdationRequestDto userDetailUpdationRequest, final String token) {
-        final var loggedInUserId = jwtUtils.extractUserId(token.replace("Bearer ", ""));
+        final var loggedInUserId = jwtUtils.extractUserId(CommonUtil.replaceString(token, "Bearer "));
         final var user = userRepository.findById(loggedInUserId.longValue()).get();
 
         user.setFirstName(userDetailUpdationRequest.getFirstName());

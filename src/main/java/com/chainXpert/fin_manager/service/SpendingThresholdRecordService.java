@@ -9,6 +9,7 @@ import com.chainXpert.fin_manager.repository.CurrentMonthlySpendingThresholdLimi
 import com.chainXpert.fin_manager.repository.SpendingThresholdRecordRepository;
 import com.chainXpert.fin_manager.repository.UserRepository;
 import com.chainXpert.fin_manager.security.utility.JwtUtils;
+import com.chainXpert.fin_manager.utils.CommonUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class SpendingThresholdRecordService {
     private final JwtUtils jwtUtils;
 
     public ResponseEntity<List<SpendingThresholdRecordDto>> retreivePastRecords(final String token) {
-        Integer uId = jwtUtils.extractUserId(token.replace("Bearer ", ""));
+        Long uId = jwtUtils.extractUserId(CommonUtil.replaceString(token, "Bearer "));
         return ResponseEntity.ok(spendingThresholdRecordRepository
                 .findByUserId(uId.longValue()).parallelStream()
                 .map(pastSpendingRecord -> SpendingThresholdRecordDto.builder().id(pastSpendingRecord.getId())

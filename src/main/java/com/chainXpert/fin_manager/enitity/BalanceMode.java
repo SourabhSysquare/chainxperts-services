@@ -31,7 +31,6 @@ public class BalanceMode implements Serializable {
 
     @Column(name = "total_balance_id", nullable = true)
     private Long totalBalanceId;
-
     
     @EqualsAndHashCode.Exclude
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

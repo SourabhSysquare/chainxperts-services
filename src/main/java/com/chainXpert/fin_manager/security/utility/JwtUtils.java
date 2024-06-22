@@ -34,8 +34,8 @@ public class JwtUtils {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public Integer extractUserId(String token) {
-        return (Integer) extractAllClaims(token).get("user_id");
+    public Long extractUserId(String token) {
+        return ((Integer) extractAllClaims(token).get("user_id")).longValue();
     }
 
     public Integer extractTotalBalanceId(String token) {

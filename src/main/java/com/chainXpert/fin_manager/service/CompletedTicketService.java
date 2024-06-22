@@ -11,6 +11,7 @@ import com.chainXpert.fin_manager.repository.TagRepository;
 import com.chainXpert.fin_manager.repository.TicketTagMappingRepository;
 import com.chainXpert.fin_manager.repository.UserRepository;
 import com.chainXpert.fin_manager.security.utility.JwtUtils;
+import com.chainXpert.fin_manager.utils.CommonUtil;
 import com.chainXpert.fin_manager.utils.ResponseUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +43,7 @@ public class CompletedTicketService {
 
     public ResponseEntity<?> create(final CompletedTicketCreationRequestDto completedTicketCreationRequest,
                                     final String token) {
-        final var userId = jwtUtils.extractUserId(token.replace("Bearer ", "")).longValue();
+        final var userId = jwtUtils.extractUserId(CommonUtil.replaceString(token, "Bearer ")).longValue();
         final var completedTicket = new CompletedTicket();
 
         completedTicket.setBalanceModeId(completedTicketCreationRequest.getBalanceModeId());
@@ -75,7 +76,7 @@ public class CompletedTicketService {
 
     public ResponseEntity<?> delete(final Long ticketId, final String token) {
         final var completedTicketId = completedTicketRepository.findById(ticketId).get();
-        final var userId = jwtUtils.extractUserId(token.replace("Bearer ", "")).longValue();
+        final var userId = jwtUtils.extractUserId(CommonUtil.replaceString(token, "Bearer ")).longValue();
 
         if (!completedTicketId.getUserId().equals(userId))
             responseUtils.unauthorizedResponse();
@@ -85,7 +86,7 @@ public class CompletedTicketService {
     }
 
     public ResponseEntity<?> retreiveExpenses(final String token) {
-        final var userId = jwtUtils.extractUserId(token.replace("Bearer ", ""));
+        final var userId = jwtUtils.extractUserId(CommonUtil.replaceString(token, "Bearer "));
         final var user = userRepository.findById(userId.longValue()).get();
         return ResponseEntity.ok(user.getCompletedTickets().parallelStream()
                 .filter(completedTicket -> completedTicket.getTicketType().equalsIgnoreCase("expense"))
@@ -107,7 +108,7 @@ public class CompletedTicketService {
     }
 
     public ResponseEntity<?> retrieveGains(final String token) {
-        final var userId = jwtUtils.extractUserId(token.replace("Bearer ", ""));
+        final var userId = jwtUtils.extractUserId(CommonUtil.replaceString(token, "Bearer "));
         final var user = userRepository.findById(userId.longValue()).get();
         return ResponseEntity.ok(user.getCompletedTickets().parallelStream()
                 .filter(completedTicket -> completedTicket.getTicketType().equalsIgnoreCase("gain"))

@@ -7,6 +7,7 @@ import com.chainXpert.fin_manager.enitity.BalanceMode;
 import com.chainXpert.fin_manager.repository.BalanceModeRepository;
 import com.chainXpert.fin_manager.repository.TotalBalanceRepository;
 import com.chainXpert.fin_manager.security.utility.JwtUtils;
+import com.chainXpert.fin_manager.utils.CommonUtil;
 import com.chainXpert.fin_manager.utils.ResponseUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,13 +34,13 @@ public class BalanceModeService {
 
     public ResponseEntity<?> create(final BalanceModeCreationRequestDto balanceModeCreationRequestDto,
                                     final String token) {
-        final var totalBalanceId = jwtUtils.extractTotalBalanceId(token.replace("Bearer ", ""));
+        final var totalBalanceId = jwtUtils.extractTotalBalanceId(CommonUtil.replaceString(token, "Bearer "));
         final var balanceMode = new BalanceMode();
         balanceMode.setActive(true);
         balanceMode.setModeType(balanceModeCreationRequestDto.getModeType());
         balanceMode.setName(balanceModeCreationRequestDto.getName());
         balanceMode.setValue(balanceModeCreationRequestDto.getValue());
-//        balanceMode.setTotalBalanceId(totalBalanceId.longValue());
+        balanceMode.setTotalBalanceId(totalBalanceId.longValue());
 
         final var savedBalancemode = balanceModeRepository.save(balanceMode);
         return responseUtils.balanceModeSuccessResponse(savedBalancemode.getId());
@@ -47,7 +48,7 @@ public class BalanceModeService {
 
     public ResponseEntity<?> update(final BalanceModeUpdationRequestDto balanceModeUpdationRequestDto,
                                     final String token) {
-        final var totalBalanceId = jwtUtils.extractTotalBalanceId(token.replace("Bearer ", ""));
+        final var totalBalanceId = jwtUtils.extractTotalBalanceId(CommonUtil.replaceString(token, "Bearer "));
         final var balanceMode = balanceModeRepository.findById(balanceModeUpdationRequestDto.getId()).get();
 
         if (!balanceMode.getTotalBalanceId().equals(totalBalanceId.longValue()))
@@ -61,7 +62,7 @@ public class BalanceModeService {
     }
 
     public ResponseEntity<?> retrieve(final String token) {
-        final var totalBalanceId = jwtUtils.extractTotalBalanceId(token.replace("Bearer ", ""));
+        final var totalBalanceId = jwtUtils.extractTotalBalanceId(CommonUtil.replaceString(token, "Bearer "));
         final var totalBalance = totalBalanceRepository.findById(totalBalanceId.longValue()).get();
         return ResponseEntity.ok(totalBalance.getBalanceModes().parallelStream()
                 .map(balanceMode -> BalanceModeDto.builder().createdAt(balanceMode.getCreatedAt())
