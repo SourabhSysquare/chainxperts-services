@@ -44,7 +44,7 @@ public class NoteService {
         note.setActive(true);
         note.setDescription(noteCreationRequest.getDescription());
         note.setTitle(noteCreationRequest.getTitle());
-        note.setUserId(jwtUtils.extractUserId(token.replace("Bearer ", "")));
+        note.setUserId(jwtUtils.extractUserId(token.replace("Bearer ", "")).longValue());
 
         final var savedNote = noteRepository.save(note);
 
@@ -85,7 +85,7 @@ public class NoteService {
     }
 
     public ResponseEntity<?> retreive(final String token) {
-        final var user = userRepository.findById(jwtUtils.extractUserId(token.replace("Bearer ", ""))).get();
+        final var user = userRepository.findById(jwtUtils.extractUserId(token.replace("Bearer ", "")).longValue()).get();
         return ResponseEntity.ok(user.getNotes().parallelStream()
                 .map(note -> NoteDto.builder().id(note.getId()).createdAt(note.getCreatedAt())
                         .description(note.getDescription()).isActive(note.isActive()).title(note.getTitle())

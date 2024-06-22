@@ -23,7 +23,7 @@ public class Goal implements Serializable {
     private static final long serialVersionUID = 4125308711988719447L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    // @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, unique = true, updatable = false)
     private Long id;
 

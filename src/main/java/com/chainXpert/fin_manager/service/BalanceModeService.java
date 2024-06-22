@@ -39,7 +39,7 @@ public class BalanceModeService {
         balanceMode.setModeType(balanceModeCreationRequestDto.getModeType());
         balanceMode.setName(balanceModeCreationRequestDto.getName());
         balanceMode.setValue(balanceModeCreationRequestDto.getValue());
-        balanceMode.setTotalBalanceId(totalBalanceId);
+//        balanceMode.setTotalBalanceId(totalBalanceId.longValue());
 
         final var savedBalancemode = balanceModeRepository.save(balanceMode);
         return responseUtils.balanceModeSuccessResponse(savedBalancemode.getId());
@@ -50,7 +50,7 @@ public class BalanceModeService {
         final var totalBalanceId = jwtUtils.extractTotalBalanceId(token.replace("Bearer ", ""));
         final var balanceMode = balanceModeRepository.findById(balanceModeUpdationRequestDto.getId()).get();
 
-        if (!balanceMode.getTotalBalanceId().equals(totalBalanceId))
+        if (!balanceMode.getTotalBalanceId().equals(totalBalanceId.longValue()))
             return responseUtils.unauthorizedResponse();
 
         balanceMode.setActive(balanceModeUpdationRequestDto.getIsActive());
@@ -62,7 +62,7 @@ public class BalanceModeService {
 
     public ResponseEntity<?> retrieve(final String token) {
         final var totalBalanceId = jwtUtils.extractTotalBalanceId(token.replace("Bearer ", ""));
-        final var totalBalance = totalBalanceRepository.findById(totalBalanceId).get();
+        final var totalBalance = totalBalanceRepository.findById(totalBalanceId.longValue()).get();
         return ResponseEntity.ok(totalBalance.getBalanceModes().parallelStream()
                 .map(balanceMode -> BalanceModeDto.builder().createdAt(balanceMode.getCreatedAt())
                         .id(balanceMode.getId()).isActive(balanceMode.isActive()).modeType(balanceMode.getModeType())

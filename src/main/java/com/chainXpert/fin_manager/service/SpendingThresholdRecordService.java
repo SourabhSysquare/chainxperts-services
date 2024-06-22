@@ -34,8 +34,9 @@ public class SpendingThresholdRecordService {
     private final JwtUtils jwtUtils;
 
     public ResponseEntity<List<SpendingThresholdRecordDto>> retreivePastRecords(final String token) {
+        Integer uId = jwtUtils.extractUserId(token.replace("Bearer ", ""));
         return ResponseEntity.ok(spendingThresholdRecordRepository
-                .findByUserId(jwtUtils.extractUserId(token.replace("Bearer ", ""))).parallelStream()
+                .findByUserId(uId.longValue()).parallelStream()
                 .map(pastSpendingRecord -> SpendingThresholdRecordDto.builder().id(pastSpendingRecord.getId())
                         .limitValue(pastSpendingRecord.getLimitValue()).month(pastSpendingRecord.getMonth())
                         .valueSpent(pastSpendingRecord.getValueSpent()).year(pastSpendingRecord.getYear()).build())

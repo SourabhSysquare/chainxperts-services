@@ -42,7 +42,7 @@ public class CompletedTicketService {
 
     public ResponseEntity<?> create(final CompletedTicketCreationRequestDto completedTicketCreationRequest,
                                     final String token) {
-        final var userId = jwtUtils.extractUserId(token.replace("Bearer ", ""));
+        final var userId = jwtUtils.extractUserId(token.replace("Bearer ", "")).longValue();
         final var completedTicket = new CompletedTicket();
 
         completedTicket.setBalanceModeId(completedTicketCreationRequest.getBalanceModeId());
@@ -63,19 +63,19 @@ public class CompletedTicketService {
 
             final var ticketTagMapping = new TicketTagMapping();
             ticketTagMapping.setTagId(savedTag.getId());
-            ticketTagMapping.setTicketId(savedCompletedTicket.getId());
+            ticketTagMapping.setTicketId(Long.valueOf(savedCompletedTicket.getId()));
             ticketTagMapping.setTicketType("COMPLETED");
 
             ticketTagMappingRepository.save(ticketTagMapping);
 
         });
 
-        return responseUtils.completedTicketSuccessResponse(savedCompletedTicket.getId());
+        return responseUtils.completedTicketSuccessResponse(Long.valueOf(savedCompletedTicket.getId()));
     }
 
     public ResponseEntity<?> delete(final Long ticketId, final String token) {
         final var completedTicketId = completedTicketRepository.findById(ticketId).get();
-        final var userId = jwtUtils.extractUserId(token.replace("Bearer ", ""));
+        final var userId = jwtUtils.extractUserId(token.replace("Bearer ", "")).longValue();
 
         if (!completedTicketId.getUserId().equals(userId))
             responseUtils.unauthorizedResponse();
@@ -86,7 +86,7 @@ public class CompletedTicketService {
 
     public ResponseEntity<?> retreiveExpenses(final String token) {
         final var userId = jwtUtils.extractUserId(token.replace("Bearer ", ""));
-        final var user = userRepository.findById(userId).get();
+        final var user = userRepository.findById(userId.longValue()).get();
         return ResponseEntity.ok(user.getCompletedTickets().parallelStream()
                 .filter(completedTicket -> completedTicket.getTicketType().equalsIgnoreCase("expense"))
                 .map(completedTicket -> {
@@ -97,7 +97,7 @@ public class CompletedTicketService {
                             .modeType(balanceMode.getModeType()).name(balanceMode.getName())
                             .updatedAt(balanceMode.getUpdatedAt()).value(balanceMode.getValue()).build();
                     return TicketDto.builder().createdAt(completedTicket.getCreatedAt())
-                            .description(completedTicket.getDescription()).id(completedTicket.getId())
+                            .description(completedTicket.getDescription()).id(Long.valueOf(completedTicket.getId()))
                             .name(completedTicket.getName())
                             .ticketCompletionDate(completedTicket.getTicketCompletionDate())
                             .updatedAt(completedTicket.getUpdatedAt()).value(completedTicket.getValue())
@@ -108,7 +108,7 @@ public class CompletedTicketService {
 
     public ResponseEntity<?> retrieveGains(final String token) {
         final var userId = jwtUtils.extractUserId(token.replace("Bearer ", ""));
-        final var user = userRepository.findById(userId).get();
+        final var user = userRepository.findById(userId.longValue()).get();
         return ResponseEntity.ok(user.getCompletedTickets().parallelStream()
                 .filter(completedTicket -> completedTicket.getTicketType().equalsIgnoreCase("gain"))
                 .map(completedTicket -> {

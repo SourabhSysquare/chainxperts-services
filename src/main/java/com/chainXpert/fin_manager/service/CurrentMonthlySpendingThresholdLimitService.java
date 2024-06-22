@@ -24,7 +24,7 @@ public class CurrentMonthlySpendingThresholdLimitService {
     public ResponseEntity<?> update(final MonthlySpendingThresholdLimitRequestDto monthlySpendingThresholdLimitRequest,
                                     final String token) {
         final var currentMonthlySpendingThresholdLimit = currentMonthlySpendingThresholdLimitRepository
-                .findByUserId(jwtUtils.extractUserId(token.replace("Bearer ", ""))).get();
+                .findByUserId(jwtUtils.extractUserId(token.replace("Bearer ", "")).longValue()).get();
 
         currentMonthlySpendingThresholdLimit.setIsActive(monthlySpendingThresholdLimitRequest.getActive());
         currentMonthlySpendingThresholdLimit.setLimitValue(monthlySpendingThresholdLimitRequest.getLimitValue());

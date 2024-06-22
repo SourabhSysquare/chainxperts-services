@@ -44,7 +44,7 @@ public class FutureTicketService {
     public ResponseEntity<?> create(final FutureTicketCreationRequestDto futureTicketCreationRequest,
                                     final String token) {
         final var userId = jwtUtils.extractUserId(token.replace("Bearer ", ""));
-        final var futureTicket = getFutureTicket(futureTicketCreationRequest, userId);
+        final var futureTicket = getFutureTicket(futureTicketCreationRequest, userId.longValue());
 
         final var savedFutureTicket = futureTicketRepository.save(futureTicket);
 
@@ -93,7 +93,7 @@ public class FutureTicketService {
 
     public ResponseEntity<?> retreiveExpenses(final String token) {
         final var userId = jwtUtils.extractUserId(token.replace("Bearer ", ""));
-        final var user = userRepository.findById(userId).get();
+        final var user = userRepository.findById(userId.longValue()).get();
         return ResponseEntity.ok(user.getFutureTickets().parallelStream()
                 .filter(completedTicket -> completedTicket.getTicketType().equalsIgnoreCase("expense"))
                 .map(completedTicket -> {
@@ -114,7 +114,7 @@ public class FutureTicketService {
 
     public ResponseEntity<?> retreiveGains(final String token) {
         final var userId = jwtUtils.extractUserId(token.replace("Bearer ", ""));
-        final var user = userRepository.findById(userId).get();
+        final var user = userRepository.findById(userId.longValue()).get();
         return ResponseEntity.ok(user.getFutureTickets().parallelStream()
                 .filter(completedTicket -> completedTicket.getTicketType().equalsIgnoreCase("gain"))
                 .map(completedTicket -> {

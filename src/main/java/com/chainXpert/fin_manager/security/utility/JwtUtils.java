@@ -34,12 +34,12 @@ public class JwtUtils {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public Long extractUserId(String token) {
-        return (long) extractAllClaims(token).get("user_id");
+    public Integer extractUserId(String token) {
+        return (Integer) extractAllClaims(token).get("user_id");
     }
 
-    public Long extractTotalBalanceId(String token) {
-        return (long) extractAllClaims(token).get("total_balance_id");
+    public Integer extractTotalBalanceId(String token) {
+        return (Integer) extractAllClaims(token).get("total_balance_id");
     }
 
     public Date extractExpiration(String token) {

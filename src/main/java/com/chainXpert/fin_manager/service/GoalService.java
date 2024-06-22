@@ -36,7 +36,7 @@ public class GoalService {
         goal.setActive(true);
         goal.setDescription(goalCreationRequest.getDescription());
         goal.setTitle(goalCreationRequest.getTitle());
-        goal.setUserId(jwtUtils.extractUserId(token.replace("Bearer ", "")));
+        goal.setUserId(jwtUtils.extractUserId(token.replace("Bearer ", "")).longValue());
         final var savedGoal = goalRepository.save(goal);
         return responseUtils.goalSuccessResponse(savedGoal.getId());
     }
@@ -50,7 +50,7 @@ public class GoalService {
     }
 
     public ResponseEntity<?> retreive(final String token) {
-        final var user = userRepository.findById(jwtUtils.extractUserId(token.replace("Bearer ", ""))).get();
+        final var user = userRepository.findById(jwtUtils.extractUserId(token.replace("Bearer ", "")).longValue()).get();
         return ResponseEntity.ok(user.getGoals().parallelStream()
                 .map(goal -> GoalDto.builder().createdAt(goal.getCreatedAt()).description(goal.getDescription())
                         .id(goal.getId()).isActive(goal.isActive()).title(goal.getTitle())
