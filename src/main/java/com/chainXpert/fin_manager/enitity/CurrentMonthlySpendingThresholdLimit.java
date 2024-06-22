@@ -1,7 +1,6 @@
 package com.chainXpert.fin_manager.enitity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,7 +11,10 @@ import java.io.Serializable;
  * @email : harshit.rastogi@sysquare.com
  * @date : 22/06/24
  */
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "current_monthly_spending_threshold_limits")
 public class CurrentMonthlySpendingThresholdLimit implements Serializable {

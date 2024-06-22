@@ -1,8 +1,7 @@
 package com.chainXpert.fin_manager.enitity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,7 +13,10 @@ import java.util.Set;
  * @email : harshit.rastogi@sysquare.com
  * @date : 22/06/24
  */
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "master_tags")
 public class Tag implements Serializable {

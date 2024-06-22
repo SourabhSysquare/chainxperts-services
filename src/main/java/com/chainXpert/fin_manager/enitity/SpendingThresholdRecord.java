@@ -1,7 +1,6 @@
 package com.chainXpert.fin_manager.enitity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,7 +11,10 @@ import java.io.Serializable;
  * @email : harshit.rastogi@sysquare.com
  * @date : 22/06/24
  */
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "spending_threshold_records")
 public class SpendingThresholdRecord implements Serializable {
@@ -43,4 +45,5 @@ public class SpendingThresholdRecord implements Serializable {
 
     @Column(name = "year", nullable = false)
     private String year;
+
 }

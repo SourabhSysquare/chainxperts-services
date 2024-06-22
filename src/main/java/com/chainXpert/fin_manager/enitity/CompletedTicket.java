@@ -1,7 +1,6 @@
 package com.chainXpert.fin_manager.enitity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,7 +13,10 @@ import java.time.LocalDateTime;
  * @email : harshit.rastogi@sysquare.com
  * @date : 22/06/24
  */
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "completed_tickets")
 public class CompletedTicket implements Serializable {

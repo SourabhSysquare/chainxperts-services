@@ -1,7 +1,6 @@
 package com.chainXpert.fin_manager.enitity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +12,10 @@ import java.time.LocalDateTime;
  * @email : harshit.rastogi@sysquare.com
  * @date : 22/06/24
  */
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "note_tag_mappings", uniqueConstraints = { @UniqueConstraint(columnNames = { "note_id", "tag_id" }) })
 public class NoteTagMapping implements Serializable {
@@ -48,4 +50,5 @@ public class NoteTagMapping implements Serializable {
     void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
+
 }

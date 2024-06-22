@@ -1,8 +1,7 @@
 package com.chainXpert.fin_manager.enitity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,7 +16,10 @@ import java.util.Set;
  * @date : 22/06/24
  */
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
@@ -96,5 +98,6 @@ public class User implements Serializable {
     void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
+
 
 }

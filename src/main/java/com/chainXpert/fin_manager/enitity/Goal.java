@@ -1,7 +1,6 @@
 package com.chainXpert.fin_manager.enitity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +12,10 @@ import java.time.LocalDateTime;
  * @email : harshit.rastogi@sysquare.com
  * @date : 22/06/24
  */
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "financial_goals")
 public class Goal implements Serializable {
@@ -28,7 +30,7 @@ public class Goal implements Serializable {
     @Column(name = "user_id", nullable = true)
     private Long userId;
 
-    
+
     @EqualsAndHashCode.Exclude
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = true, insertable = false, updatable = false)
@@ -51,7 +53,7 @@ public class Goal implements Serializable {
 
     @PrePersist
     void onCreate() {
-        
+
         this.isActive = true;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
