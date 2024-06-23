@@ -2,6 +2,15 @@
 
 ##### Submission project for Formidium Hackathon 2024
 
+# Table of Contents
+* Tech Stack Used
+* Entities
+* Security Flow
+* Setup Locally
+* Setup With Docker
+* Contact
+
+
 ## Tech Stack Used
 * Java 11
 * Spring Boot
@@ -17,8 +26,8 @@
 ![ER Diagram of DB Entities](/home/sysquare/hackthon/fin-manager/src/main/resources/static/119250906-e7159b80-bbc0-11eb-930d-944714b986f6.jpeg)
 
 ## Security Flow
-* On Successful validation of login credentials, a JWT will be returned representing the user 
-* decode the below sample JWT on jwt.io for reference
+* Upon successful validation of login credentials, a JWT will be returned representing the user.
+  * Decode the sample JWT below on jwt.io for reference
 
 ```
 eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb3VyYWJoMUBnbWFpbC5jb20iLCJhY2NvdW50X2NyZWF0aW9uX3RpbWVzdGFtcCI6IjIwMjQtMDYtMjJUMTE6MDQ6MjIuMDQxIiwidXNlcl9pZCI6MSwidG90YWxfYmFsYW5jZV9pZCI6MSwic2NvcGUiOiJ1c2VyIiwibmFtZSI6IlJlYmVjY2EgR3JlZW4iLCJleHAiOjE3MTkwOTc0NzksImlhdCI6MTcxOTA2MTQ3OX0.e0rMVJKqa9vObAX00jG63ejcbV2QJGeV2Lzl9aA9wsE
@@ -106,4 +115,7 @@ To stop the container run
 ```
 sudo docker-compose stop
 ```
+
+## Contact
+For any queries or further information, please contact [Your Name] at [harshit14r@gmail.com].
 

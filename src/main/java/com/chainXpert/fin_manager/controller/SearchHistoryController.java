@@ -26,7 +26,7 @@ public class SearchHistoryController {
     public void upsertSearchHistory(
             @RequestBody final SearchHistoryDto searchHistoryDto,
             @RequestHeader(name = "Authorization")  final String token) {
-        searchHistoryService.upsert(searchHistoryDto, token);
+         searchHistoryService.upsert(searchHistoryDto, token);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

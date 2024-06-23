@@ -25,7 +25,7 @@ public class TotalBalance implements Serializable {
     private static final long serialVersionUID = -337603188367530726L;
 
     @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, unique = true, updatable = false)
     private Long id;
 

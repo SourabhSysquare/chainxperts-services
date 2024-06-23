@@ -25,7 +25,7 @@ public class BalanceMode implements Serializable {
     private static final long serialVersionUID = -6355462386694894438L;
 
     @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, unique = true, updatable = false)
     private Long id;
 

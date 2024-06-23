@@ -24,7 +24,7 @@ public class CompletedTicket implements Serializable {
     private static final long serialVersionUID = -5235224325275100751L;
 
     @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, unique = true, updatable = false)
     private Long id;
 
