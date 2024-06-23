@@ -23,7 +23,7 @@
 ## Entities
 ##### SQL Migration Scripts can be viewed at src/main/resources/db/migration
 ##### Read in detail about entities used in ENTITIES.md in project root.
-![ER Diagram of DB Entities](/home/sysquare/hackthon/fin-manager/src/main/resources/static/119250906-e7159b80-bbc0-11eb-930d-944714b986f6.jpeg)
+![ER Diagram of DB Entities](/home/sysquare/hackthon/fin-manager/src/main/resources/static/img/119250906-e7159b80-bbc0-11eb-930d-944714b986f6.png)
 
 ## Security Flow
 * Upon successful validation of login credentials, a JWT will be returned representing the user.

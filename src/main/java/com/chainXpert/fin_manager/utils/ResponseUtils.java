@@ -65,7 +65,9 @@ public class ResponseUtils {
                 "Login Successfull, Please use this provided JWT for authentication by using Authentication Bearer mechanism");
         response.put("JWT", jwtToken);
         response.put("timestamp", LocalDateTime.now().toString());
-        response.put("user", user);
+        response.put("emailId", user.getEmailId());
+        response.put("name", user.getFirstName() + " " + user.getLastName());
+        response.put("dob", user.getDateOfBirth());
         return ResponseEntity.ok(response.toString());
     }
 
